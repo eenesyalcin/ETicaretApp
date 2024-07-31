@@ -9,7 +9,8 @@ const userShema = new mongoose.Schema({
     },
     email: {
         type: String,
-        required: true
+        required: true,
+        unique: true        // Kullanıcı email'inin unique olmasını sağlar.
     },
     password: {
         type: String,

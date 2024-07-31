@@ -18,21 +18,24 @@ router.post("/register", async(req, res) => {
 
         // Body içerisinde gelen bilgilerin oluşturduğumuz User collection bilgileri ile eşleşmesini sağlar.
         const user = new User(req.body);   
-        user._id = uuidv4();                // Verilen id değerinin uniq bir değer olmasını sağlar.
+        user._id = uuidv4();                // Verilen id değerinin unique bir değer olmasını sağlar.
         user.createdDate = new Date();
         user.isAdmin = false;
 
 
-        // Oluşturulan User'ın database tarafına kaydedilmesini sağlar.
-        await user.save();
-
-
+        // Kayıt yapılırken email'in unique olmasını sağlayan kontrolü yazdık.
+        const checkUserEmail = await User.findOne({email: user.email});
+        if(checkUserEmail != null){
+            res.status(403).json({message: "Bu mail adresi daha önce kullanılmış!"});
+        }else{
+        await user.save();      // Oluşturulan User'ın database tarafına kaydedilmesini sağlar.
         // Register işleminden sonra geriye bir token değerinin döndürülmesini sağlar.
         const token = jwt.sign({}, secretKey, options);
         let model = {token: token, user: user};
         res.json(model);
-
+        }
         
+
     } catch (error) {
         // API isteğinde hata olduğunda(status = 500) geriye hata mesajı döndürür.
         res.status(500).json({message: error.message});
