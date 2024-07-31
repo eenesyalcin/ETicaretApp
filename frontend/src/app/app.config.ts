@@ -8,6 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 
 import { routes } from './app.routes';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -18,6 +19,7 @@ export const appConfig: ApplicationConfig = {
       BrowserModule,
       CommonModule,
       BrowserAnimationsModule,
+      NgxSpinnerModule,
       ToastrModule.forRoot({
         closeButton: true,
         progressBar: true
