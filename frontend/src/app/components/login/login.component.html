@@ -1,1 +1,26 @@
-<p>login works!</p>
+<!-- LOGIN SAYFA TASARIMI (ngForm) -->
+<div class="d-flex justify-content-center" style="margin-top: 75px;">
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-header" style="background-color: black;">
+                <h1 class="text-center" style="color: white;">GİRİŞ SAYFASI</h1>
+            </div>
+            <div class="card-body">
+                <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
+                    <div class="form-group">
+                        <label for="email">E-posta</label>
+                        <input class="form-control" type="email" ngModel name="email" id="email" required email>
+                    </div>
+                    <div class="form-group mt-2">
+                        <label for="password">Şifre</label>
+                        <input class="form-control" type="password" ngModel name="password" id="password" required>
+                    </div>
+                    <div class="form-group mt-2">
+                        <button [disabled]="!loginForm.valid" class="btn btn-outline-dark w-100">Giriş Yap</button>
+                        <button routerLink="/register" class="btn btn-dark btn-sm mt-2" style="float: right;">Kayıt Ol</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
