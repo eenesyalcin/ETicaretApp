@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 // Uygulamda cors politikası uygulayabilmek için kütüphanesini dahil ettik.
 const cors = require("cors");
+const connection = require("./database/db");
 
 
 // Yapacağımız tüm API isteklerinin JSON formatında olacağını uygulamaya bildiriyoruz.
@@ -10,10 +11,8 @@ app.use(express.json());
 app.use(cors());
 
 
-// Deneme amaçlı bir API isteğinde bulunduk.
-app.get("", (req, res) => {
-    res.json({message: "API isteği başarılı şekilde çalışıyor."})
-});
+// Database bağlantısı için oluşturduğumuz methodu çağırdık.
+connection();
 
 
 // Uyguylamanın ayağa kalkabilmesi için bir porta adapte ettik.
