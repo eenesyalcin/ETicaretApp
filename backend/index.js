@@ -11,6 +11,11 @@ app.use(express.json());
 app.use(cors());
 
 
+// Oluşturduğumuz API'yi index.js dosyasında tanıttık.
+const authRouter = require("./routers/auth.router");
+app.use("/api/auth", authRouter);
+
+
 // Database bağlantısı için oluşturduğumuz methodu çağırdık.
 connection();
 
