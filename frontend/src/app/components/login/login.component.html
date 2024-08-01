@@ -2,8 +2,8 @@
 <div class="d-flex justify-content-center" style="margin-top: 75px;">
     <div class="col-md-3">
         <div class="card">
-            <div class="card-header" style="background-color: black;">
-                <h1 class="text-center" style="color: white;">GİRİŞ SAYFASI</h1>
+            <div class="card-header" style="background-color: rgb(33, 37, 41);">
+                <h1 class="text-center" style="color: white;">GİRİŞ YAP</h1>
             </div>
             <div class="card-body">
                 <form #loginForm="ngForm" (ngSubmit)="login(loginForm)" autocomplete="off">
@@ -47,7 +47,7 @@
                     </div>
                     <div class="form-group mt-2">
                         <button [disabled]="!loginForm.valid" class="btn btn-outline-dark w-100">Giriş Yap</button>
-                        <button routerLink="/register" class="btn btn-dark btn-sm mt-2" style="float: right;">Kayıt Ol</button>
+                        <button routerLink="/register" class="btn btn-info btn-sm mt-2" style="float: right;">Kayıt Ol</button>
                     </div>
                 </form>
             </div>

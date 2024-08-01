@@ -1,1 +1,74 @@
-<p>register works!</p>
+<!-- REGISTER SAYFA TASARIMI (ngForm) -->
+<div class="d-flex justify-content-center" style="margin-top: 75px;">
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-header" style="background-color: rgb(13, 202, 240)">
+                <h1 class="text-center">KAYIT OL</h1>
+            </div>
+            <div class="card-body">
+                <form #registerForm="ngForm" (ngSubmit)="register(registerForm)" autocomplete="off">
+                    <div class="form-group">
+                        <label for="nameAndSurname">Ad Soyad</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            ngModel
+                            name="nameAndSurname"
+                            id="nameAndSurname"
+                            #nameAndSurname
+                            [appValid]="nameAndSurname.validity.valid"
+                            required
+                            minlength="3">
+                        <div class="invalid-feedback">
+                            En az 3 karakter giriniz!
+                        </div>
+                    </div>
+                    <div class="form-group mt-2">
+                        <label for="email">E-posta</label>
+                        <input
+                            type="email"
+                            class="form-control"
+                            ngModel
+                            name="email"
+                            id="email"
+                            #email
+                            [appValid]="email.validity.valid"
+                            required
+                            minlength="3">
+                        <div class="invalid-feedback">
+                            Geçerli bir e-posta adresi giriniz!
+                        </div>
+                    </div>
+                    <div class="form-group mt-2">
+                        <label for="password">Şifre</label>
+                        <input
+                            type="password"
+                            class="form-control"
+                            ngModel
+                            name="password"
+                            id="password"
+                            #password
+                            [appValid]="password.validity.valid"
+                            required>
+                        <div class="invalid-feedback">
+                            Şifre alanı boş olamaz!
+                        </div>
+                    </div>
+                    <div class="form-group mt-2">
+                        <button
+                            [disabled]="!registerForm.valid"
+                            class="btn btn-outline-info w-100">
+                            Kayıt Ol
+                        </button>
+                        <button 
+                            routerLink="/login" 
+                            class="btn btn-dark btn-sm mt-2" 
+                            style="float: right;">
+                            Giriş Yap
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
