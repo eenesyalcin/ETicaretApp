@@ -12,7 +12,7 @@
                         <input
                             type="text"
                             class="form-control"
-                            ngModel
+                            [(ngModel)]="model.name"
                             name="nameAndSurname"
                             id="nameAndSurname"
                             #nameAndSurname
@@ -28,7 +28,7 @@
                         <input
                             type="email"
                             class="form-control"
-                            ngModel
+                            [(ngModel)]="model.email"
                             name="email"
                             id="email"
                             #email
@@ -44,7 +44,7 @@
                         <input
                             type="password"
                             class="form-control"
-                            ngModel
+                            [(ngModel)]="model.password"
                             name="password"
                             id="password"
                             #password
