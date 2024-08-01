@@ -34,7 +34,7 @@ export class GenericHttpService {
   }
 
   // Generic POST isteği yazdık.
-  post<T>(api: string, model: T, callBack: (res: T) => void){
+  post<T>(api: string, model: any, callBack: (res: T) => void){
     this._spinner.show();       // API isteği yapılırken spinner gösterilecek.
     this._http.post<T>(`${this.api}/${api}`, model, {}).subscribe({
       next: (res: T) => {
