@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-// Oluşturacağımız collection için şema oluşturduk.
+// Oluşturacağımız User collection için şema oluşturduk.
 const userShema = new mongoose.Schema({
     _id: String,
     name: {
@@ -20,7 +20,7 @@ const userShema = new mongoose.Schema({
     createdDate: Date
 })
 
-// Bir User(collection) oluşturduk.
+// Şemadan User(collection) oluşturduk.
 const User = mongoose.model("User", userShema);
 
 // Oluşturduğumuz User'ın dışarıdan erişilebilmesini sağladık.
