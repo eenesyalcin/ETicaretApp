@@ -20,7 +20,7 @@
 
         <div class="card-body">
             <div class="form-group">
-                <button class="btn btn-outline-primary">
+                <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addModal">
                     <i class="fa fa-plus"></i>
                 </button>
                 <div class="col-md-4" style="float: right;">
@@ -37,12 +37,61 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr></tr>
-                        <tr></tr>
-                        <tr></tr>
+                        <!-- Döngü ile yapıla katagori kaydını tabloya yazdırdık. -->
+                        @for (category of categories; track category) {
+                            <tr>
+                                <td>{{ $index + 1 }}</td>
+                                <td>{{ category.name }}</td>
+                                <td>
+                                    <button class="btn btn-outline-warning btn-sm">
+                                        <i class="fa fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-outline-danger btn-sm mx-1">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        }
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 </div>
+
+
+
+
+
+<!-- Kategori eklemek için modal oluşturduk. -->
+<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="addModal">Kategori Ekle</h1>
+          <button type="button" class="btn-close" id="addModalCloseBtn" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form autocomplete="off" #addForm="ngForm" (ngSubmit)="add(addForm)">
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="name">Kategori Adı</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        ngModel
+                        name="name"
+                        id="name"
+                        #name
+                        [appValid]="name.validity.valid"
+                        required
+                        minlength="3">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                <button type="submit" class="btn btn-primary">Kaydet</button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>

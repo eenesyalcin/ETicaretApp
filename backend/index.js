@@ -16,7 +16,7 @@ const authRouter = require("./routers/auth.router");
 const categoryRouter = require("./routers/category.router");
 
 app.use("/api/auth", authRouter);
-app.use("/api/category", categoryRouter);
+app.use("/api/categories", categoryRouter);
 
 
 // Database bağlantısı için oluşturduğumuz methodu çağırdık.

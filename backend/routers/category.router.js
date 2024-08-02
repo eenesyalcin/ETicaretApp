@@ -9,13 +9,20 @@ router.post("/add", async(req, res) => {
     try {
         
         const {name} = req.body;            // Gelen kategori ismini body içerisinde aldık.
-        // Kategoriyi hazırladık.
-        const category = new Category({
-            _id: uuidv4(),                  // Verilen id değerinin unique bir değer olmasını sağlar.
-            name: name                      // Kategoriye isim verilir.
-        });
-        await Category.save();              // Kategorinin kaydedilmesini sağlar.
-        res.json({message: "Kategori kaydı başarıyla tamamlandı."})
+
+        // Kayıt yapılırken kategori isminin unique olmasını sağlayan kontrolü yazdık.
+        const checkName = await Category.findOne({name: name});
+        if(checkName != null){
+            res.status(403).json({message: "Bu kategori adı daha önce kullanılmış!"});
+        }else{
+            // Kategoriyi hazırladık.
+            const category = new Category({
+                _id: uuidv4(),                  // Verilen id değerinin unique bir değer olmasını sağlar.
+                name: name                      // Kategoriye isim verilir.
+            });
+            await category.save();              // Kategorinin kaydedilmesini sağlar.
+            res.json({message: "Kategori kaydı başarıyla tamamlandı."})
+        }
 
     } catch (error) {
         // API isteğinde hata olduğunda(status = 500) geriye hata mesajı döndürür.
@@ -46,7 +53,7 @@ router.post("/update", async(req, res) => {
         const {_id, name} = req.body;                           // Body içerisinde id ve kategori ismi gelir.
         const category = await Category.findOne({_id: _id});    // İlgili kategori bulunur.
         category.name = name;                                   // Mevcut kategori ismi değiştirilir.
-        await Category.findByIdAndUpdate(_id, category);        // Kategorinin güncellenmesini sağlar.
+        await category.findByIdAndUpdate(_id, category);        // Kategorinin güncellenmesini sağlar.
         res.json({message: "Kategori kaydı başarıyla güncellendi!"})
 
     } catch (error) {
@@ -57,7 +64,7 @@ router.post("/update", async(req, res) => {
 
 
 // KATEGORİLERİ LİSTELEME
-router.get("/getAll", async(req, res) => {
+router.get("/", async(req, res) => {
     try {
         
         const categories = await Category.find().sort({name: 1});       // Kategorilerin alfabetik sıraya göre listelenmesini sağlar.
