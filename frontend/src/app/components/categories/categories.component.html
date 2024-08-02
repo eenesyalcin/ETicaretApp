@@ -1,63 +1,45 @@
 <!-- KATEGORİLER SAYFA TASARIMI -->
-<div class="container mt-3">
-    <div class="card">
-        <div class="card-header">
-            <h4 style="float: left;">Kategoriler</h4>
-            <nav style="--bs-breadcrumb-divider: '>'; float: right;" aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a style="text-decoration: none;" routerLink="/">Ana Sayfa</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Kategoriler</li>
-                </ol>
-            </nav>
+ 
+<!-- Oluşturduğumuz generic sayfa yapısını buraya gömdük. -->
+<app-blank title="Kategoriler" sectionTitle="Kategori Listesi">
+    <div class="form-group">
+        <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addModal">
+            <i class="fa fa-plus"></i>
+        </button>
+        <div class="col-md-4" style="float: right;">
+            <input type="search" class="form-control" [(ngModel)]="search" placeholder="ARA...">
         </div>
     </div>
 
-
-    <div class="card mt-2">
-        <div class="card-header">
-            <h4>Kategori Listesi</h4>
-        </div>
-
-        <div class="card-body">
-            <div class="form-group">
-                <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addModal">
-                    <i class="fa fa-plus"></i>
-                </button>
-                <div class="col-md-4" style="float: right;">
-                    <input type="search" class="form-control" [(ngModel)]="search" placeholder="ARA...">
-                </div>
-            </div>
-            <div class="form-group mt-2">
-                <table class="table table-bordered">
-                    <thead class="table-secondary">
-                        <tr>
-                            <th>#</th>
-                            <th>KATEGORİ ADI</th>
-                            <th>İŞLEMLER</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Döngü ile yapıla katagori kaydını tabloya yazdırdık. -->
-                        @for (category of categories | categoryPipe: search; track category) {
-                            <tr>
-                                <td>{{ $index + 1 }}</td>
-                                <td>{{ category.name }}</td>
-                                <td>
-                                    <button class="btn btn-outline-warning btn-sm" (click)="get(category)" data-bs-toggle="modal" data-bs-target="#updateModal">
-                                        <i class="fa fa-edit"></i>
-                                    </button>
-                                    <button class="btn btn-outline-danger btn-sm mx-1" (click)="removeById(category)">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </div>
+    <div class="form-group mt-2">
+        <table class="table table-bordered">
+            <thead class="table-secondary">
+                <tr>
+                    <th>#</th>
+                    <th>KATEGORİ ADI</th>
+                    <th>İŞLEMLER</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Döngü ile yapıla katagori kaydını tabloya yazdırdık. -->
+                @for (category of categories | categoryPipe: search; track category) {
+                    <tr>
+                        <td>{{ $index + 1 }}</td>
+                        <td>{{ category.name }}</td>
+                        <td>
+                            <button class="btn btn-outline-warning btn-sm" (click)="get(category)" data-bs-toggle="modal" data-bs-target="#updateModal">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                            <button class="btn btn-outline-danger btn-sm mx-1" (click)="removeById(category)">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
-</div>
+</app-blank>
 
 
 
