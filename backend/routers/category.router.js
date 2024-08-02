@@ -1,5 +1,5 @@
 const express = require("express");
-const router = express.Router;          // Bu değişkenin bir Router olduğunu belirttik.
+const router = express.Router();          // Bu değişkenin bir Router olduğunu belirttik.
 const Category = require("../models/category");
 const { v4: uuidv4 } = require("uuid");
 
@@ -68,3 +68,7 @@ router.get("/getAll", async(req, res) => {
         res.status(500).json({message: error.message})
     }
 });
+
+
+// Oluşturduğumuz router'ın dışarıdan erişilebilmesini sağladık.
+module.exports = router;
