@@ -49,13 +49,22 @@ router.post("/removeById", async(req, res) => {
 // KATEGORİ GÜNCELLEME
 router.post("/update", async(req, res) => {
     try {
-        
+
         const {_id, name} = req.body;                           // Body içerisinde id ve kategori ismi gelir.
         const category = await Category.findOne({_id: _id});    // İlgili kategori bulunur.
-        category.name = name;                                   // Mevcut kategori ismi değiştirilir.
-        await category.findByIdAndUpdate(_id, category);        // Kategorinin güncellenmesini sağlar.
-        res.json({message: "Kategori kaydı başarıyla güncellendi!"})
 
+        // Güncelleme yapılırken kategori isminin unique olmasını sağlayan kontrolü yazdık.        
+        if(category.name != name){
+            const checkName = await Category.findOne({name: name});
+            if(checkName != null){
+                res.status(403).json({message: "Bu kategori adı daha önce kullanılmış!"});
+            }else{
+                category.name = name;                                   // Mevcut kategori ismi değiştirilir.
+                await Category.findByIdAndUpdate(_id, category);        // Kategorinin güncellenmesini sağlar.
+                res.json({message: "Kategori kaydı başarıyla güncellendi!"})
+            }
+        }
+        
     } catch (error) {
         // API isteğinde hata olduğunda(status = 500) geriye hata mesajı döndürür.
         res.status(500).json({message: error.message})
