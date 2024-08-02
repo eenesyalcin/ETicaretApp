@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { CategoryService } from './services/category.service';
 import { CategoryModel } from './models/category.model';
 import { NgForm } from '@angular/forms';
+import { SwalService } from '../../common/services/swal.service';
 
 @Component({
   selector: 'app-categories',
@@ -19,7 +20,8 @@ export class CategoriesComponent implements OnInit {
 
   constructor(
     private _toastr: ToastrService,
-    private _category: CategoryService
+    private _category: CategoryService,
+    private _swal: SwalService
   ) {}
 
   ngOnInit(): void {
@@ -60,6 +62,13 @@ export class CategoriesComponent implements OnInit {
         element?.click();
       });
     }
+  }
+
+  // Sweetalert2 kütüphanesini denedik.
+  removeById(){
+    this._swal.callSwal("Kategoriyi silmek istiyor musunuz?", "", "Sil", () => {
+
+    });
   }
 
 }
