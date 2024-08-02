@@ -1,0 +1,15 @@
+<!-- Farklı sayfalarda kullanilabilmesi generic hale getirilen HTML kodları. -->
+<div class="form-group mt-2">
+    <table class="table table-bordered">
+        <thead class="table-secondary">
+            <tr>
+                @for (head of heads; track head) {
+                    <th>{{ head }}</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            <ng-content></ng-content>
+        </tbody>
+    </table>
+</div>
