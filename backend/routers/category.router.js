@@ -36,7 +36,7 @@ router.post("/removeById", async(req, res) => {
     try {
         
         const {_id} = req.body;                     // Body içerisinde id gelir.
-        await category.findByIdAndRemove(_id);      // Kategorinin silinmesini sağlar.
+        await Category.findByIdAndDelete(_id);      // Kategorinin silinmesini sağlar.
         res.json({message: "Kategori kaydı başarıyla silindi!"})
 
     } catch (error) {

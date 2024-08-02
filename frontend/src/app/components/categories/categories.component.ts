@@ -64,10 +64,13 @@ export class CategoriesComponent implements OnInit {
     }
   }
 
-  // Sweetalert2 kütüphanesini denedik.
-  removeById(){
-    this._swal.callSwal("Kategoriyi silmek istiyor musunuz?", "", "Sil", () => {
-
+  // Kategori silmek için metod yazdık.
+  removeById(model: CategoryModel){
+    this._swal.callSwal(`${model.name} kategorisini silmek istiyor musunuz?`, "", "Sil", () => {
+      this._category.removeById(model._id, res => {
+        this._toastr.success(res.message);
+        this.getAll();
+      })
     });
   }
 
