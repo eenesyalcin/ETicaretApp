@@ -134,3 +134,23 @@ router.post("/update", upload.array(images), async(res, res) => {
         res.json({message: "Ürün kaydı başarıyla güncellendi!"})
     });
 });
+
+
+// ÜRÜN RESMİ SİLME
+router.post("/removeImageByProductIdAndIndex", async(req, res) => {
+    response(res, async() => {
+        const {_id, index} = req.body;                  // Ürüne ait id ve index bilgilerini body içerisinde aldık. Böylece kaçıncı resim olduğunu bilebiliriz.
+        let product = await Product.findById(_id);      // Ürünü tespit ediyoruz.
+
+        if(product.imageUrls.length == 1){
+            // Ürüne ait tek resim varsa silinmesini engelliyoruz.
+            res.status(500).json({message: "Ürüne ait en az 1 tane resim bulunmak zorundadır!"});
+        }else{
+            let image = product.imageUrls[index];                   // Resmi tespit ettik.           
+            product.imageUrls.splice(index, 1);                     // Resmin isimini database tarafından kaldırdık.
+            await Product.findByIdAndUpdate(_id, product);          // Ürünü güncelledik.
+            fs.unlink(image.path, () => {});                        // Ürün resmini sildik.
+            res.json({message: "Resim başarıyla kaldırıldı!"});
+        }
+    })
+})
