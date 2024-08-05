@@ -2,12 +2,12 @@ const express = require("express");
 const router = express.Router();          // Bu değişkenin bir Router olduğunu belirttik.
 const Category = require("../models/category");
 const { v4: uuidv4 } = require("uuid");
+const response = require("../services/response.service");
 
 
 // KATEGORİ EKLEME
 router.post("/add", async(req, res) => {
-    try {
-        
+    response(res, async() => {
         const {name} = req.body;            // Gelen kategori ismini body içerisinde aldık.
 
         // Kayıt yapılırken kategori isminin unique olmasını sağlayan kontrolü yazdık.
@@ -23,33 +23,23 @@ router.post("/add", async(req, res) => {
             await category.save();              // Kategorinin kaydedilmesini sağlar.
             res.json({message: "Kategori kaydı başarıyla tamamlandı."})
         }
-
-    } catch (error) {
-        // API isteğinde hata olduğunda(status = 500) geriye hata mesajı döndürür.
-        res.status(500).json({message: error.message})
-    }
+    });
 });
 
 
 // KATEGORİ SİLME
 router.post("/removeById", async(req, res) => {
-    try {
-        
+    response(resi, async() => {
         const {_id} = req.body;                     // Body içerisinde id gelir.
         await Category.findByIdAndDelete(_id);      // Kategorinin silinmesini sağlar.
         res.json({message: "Kategori kaydı başarıyla silindi!"})
-
-    } catch (error) {
-        // API isteğinde hata olduğunda(status = 500) geriye hata mesajı döndürür.
-        res.status(500).json({message: error.message})
-    }
+    });
 });
 
 
 // KATEGORİ GÜNCELLEME
 router.post("/update", async(req, res) => {
-    try {
-
+    response(res, async() => {
         const {_id, name} = req.body;                           // Body içerisinde id ve kategori ismi gelir.
         const category = await Category.findOne({_id: _id});    // İlgili kategori bulunur.
 
@@ -64,25 +54,16 @@ router.post("/update", async(req, res) => {
                 res.json({message: "Kategori kaydı başarıyla güncellendi!"})
             }
         }
-        
-    } catch (error) {
-        // API isteğinde hata olduğunda(status = 500) geriye hata mesajı döndürür.
-        res.status(500).json({message: error.message})
-    }
+    });
 });
 
 
 // KATEGORİLERİ LİSTELEME
 router.get("/", async(req, res) => {
-    try {
-        
+    response(res, async() => {
         const categories = await Category.find().sort({name: 1});       // Kategorilerin alfabetik sıraya göre listelenmesini sağlar.
         res.json(categories);
-        
-    } catch (error) {
-        // API isteğinde hata olduğunda(status = 500) geriye hata mesajı döndürür.
-        res.status(500).json({message: error.message})
-    }
+    });
 });
 
 

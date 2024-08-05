@@ -3,6 +3,7 @@ const User = require("../models/user");
 const router = express.Router();            // Bu değişkenin bir Router olduğunu belirttik.
 const { v4:uuidv4 } = require("uuid");
 const jwt = require("jsonwebtoken");
+const response = require("../services/response.service");
 
 
 const secretKey = "My Secret Key My Secret Key 1234.";
@@ -14,7 +15,7 @@ const options = {
 
 // REGISTER API
 router.post("/register", async(req, res) => {
-    try {
+    response(res, async() => {
         // Body içerisinde gelen bilgilerin oluşturduğumuz User collection bilgileri ile eşleşmesini sağlar.
         const user = new User(req.body);   
         user._id = uuidv4();                // Verilen id değerinin unique bir değer olmasını sağlar.
@@ -32,16 +33,13 @@ router.post("/register", async(req, res) => {
         let model = {token: token, user: user};
         res.json(model);
         }
-    } catch (error) {
-        // API isteğinde hata olduğunda(status = 500) geriye hata mesajı döndürür.
-        res.status(500).json({message: error.message});
-    }
-})
+    });
+});
 
 
 // LOGIN API
 router.post("/login", async(req, res) => {
-    try {
+    response(res, async() => {
         const {email, password} = req.body;
         let user = await User.findOne({email: email});
         if(user == null){
@@ -55,10 +53,8 @@ router.post("/login", async(req, res) => {
                 res.json(model);
             }
         }
-    } catch (error) {
-        res.status(500).json({message: error.message});
-    }
-})
+    });
+});
 
 
 // Oluşturduğumuz router'ın dışarıdan erişilebilmesini sağladık.
