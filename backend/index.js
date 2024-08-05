@@ -11,12 +11,18 @@ app.use(express.json());
 app.use(cors());
 
 
+// Bu yapıyla uploads klasörünü paylaşıma açıyoruz. Eğer paylaşıma açmazsak resimler adres olarak gider fakat okuma olarak gitmezler.
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
+
 // Oluşturduğumuz API'leri index.js dosyasında tanıttık.
 const authRouter = require("./routers/auth.router");
 const categoryRouter = require("./routers/category.router");
+const productRouter = require("./routers/product.router");
 
 app.use("/api/auth", authRouter);
 app.use("/api/categories", categoryRouter);
+app.use("/api/products", productRouter);
 
 
 // Database bağlantısı için oluşturduğumuz methodu çağırdık.

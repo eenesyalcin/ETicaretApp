@@ -152,5 +152,9 @@ router.post("/removeImageByProductIdAndIndex", async(req, res) => {
             fs.unlink(image.path, () => {});                        // Ürün resmini sildik.
             res.json({message: "Resim başarıyla kaldırıldı!"});
         }
-    })
-})
+    });
+});
+
+
+// Oluşturduğumuz router'ın dışarıdan erişilebilmesini sağladık.
+module.exports = router;
