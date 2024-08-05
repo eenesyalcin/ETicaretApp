@@ -3,9 +3,10 @@ const router = express.Router();                                // Bu değişken
 const Product = require("../models/product");
 const { v4: uuidv4 } = require("uuid");
 const fs = require("fs");
+const upload = require("../services/file.service");
 
 // ÜRÜN EKLEME
-router.post("/add", async(req, res) => {
+router.post("/add", upload.array("images"), async(req, res) => {
     try {
         
         const {name, stock, price, categories} = req.body;      // Gelen ürün bilgilerini body içerisinde aldık.
@@ -19,6 +20,7 @@ router.post("/add", async(req, res) => {
             price: price,
             categories: categories,
             isActive: true,
+            imageUrls: req.file,
             createdDate: new Date()
         });
 
