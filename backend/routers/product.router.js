@@ -73,7 +73,7 @@ router.post("/", async(req, res) => {
                 }
             ]
         })
-        .sort({name: 1})                        // Ürünleri ismine göre küçükten büyüğe sıraladık.
+        .sort({name: 1})                        // Ürünleri alfabetik olarak sıraladık.
         .populate("catagories")                 // Mevcutta olan katagori tablosunu buna dahil ettik.
         .skip((pageNumber - 1) * pageSize)      // Kaç tane ürün kaydını atlaması gerektiğini belirttik.
         .limit(pageSize);                       // Kaç tane ürün kaydı alacağını bildirdik.
@@ -91,5 +91,15 @@ router.post("/", async(req, res) => {
         };
 
         res.json(model);        // Oluşturduğumuz modeli karşı tarafa gönderdik.
+    });
+});
+
+
+// ÜRÜN GETİRME ==> (Id' ye göre!)
+router.post("/getById", async(req, res) => {
+    response(res, async() => {
+        const {_id} = req.body;                         // Body içerisinde id gelir.
+        let product = await Product.findById(_id);      // İlgili ürün bulunur.
+        res.json(product);                              // Ürün geriye döner.
     });
 });
