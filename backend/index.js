@@ -4,13 +4,12 @@ const app = express();
 // Uygulamda cors politikası uygulayabilmek için kütüphanesini dahil ettik.
 const cors = require("cors");
 const connection = require("./database/db");
+const path = require("path");
 
 
 // Yapacağımız tüm API isteklerinin JSON formatında olacağını uygulamaya bildiriyoruz.
 app.use(express.json());
 app.use(cors());
-
-
 // Bu yapıyla uploads klasörünü paylaşıma açıyoruz. Eğer paylaşıma açmazsak resimler adres olarak gider fakat okuma olarak gitmezler.
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 

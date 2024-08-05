@@ -32,7 +32,7 @@ router.post("/add", upload.array("images"), async(req, res) => {
 
 
 // ÜRÜN SİLME
-router.post("removeById", async(req, res) => {
+router.post("/removeById", async(req, res) => {
     response(res, async() => {
         const {_id} = req.body;     // Body içerisinde id gelir.
 
@@ -55,14 +55,14 @@ router.post("/", async(req, res) => {
         const {pageNumber, pageSize, search} = req.body;        // Gelen ürün bilgilerini body içerisinde aldık.
         
         // Arama verisine göre kaç adet ürün olduğunu tespit ediyoruz.
-        let productCounter = await Product.find({
+        let productCount = await Product.find({
             $or: [
                 {
                     // Regex, arama sonucunda içerisinde geçen benzer tüm değerleri getir anlamında kullanılır.
                     name: {$regex: search, $options: 'i'}
                 }
             ]
-        }).count();
+        }).countDocuments();
 
         // Ürün listesini elde ediyoruz.
         let products = await Product.find({
@@ -74,7 +74,7 @@ router.post("/", async(req, res) => {
             ]
         })
         .sort({name: 1})                        // Ürünleri alfabetik olarak sıraladık.
-        .populate("catagories")                 // Mevcutta olan katagori tablosunu buna dahil ettik.
+        .populate("categories")                 // Mevcutta olan katagori tablosunu buna dahil ettik.
         .skip((pageNumber - 1) * pageSize)      // Kaç tane ürün kaydını atlaması gerektiğini belirttik.
         .limit(pageSize);                       // Kaç tane ürün kaydı alacağını bildirdik.
 
@@ -124,7 +124,7 @@ router.post("/getById", async(req, res) => {
 
 
 // ÜRÜN GÜNCELLEME
-router.post("/update", upload.array(images), async(res, res) => {
+router.post("/update", upload.array("images"), async(req, res) => {
     response(res, async() => {
         const {_id, name, stock, price, categories} = req.body;     // Gelen ürün bilgilerini body içerisinde aldık.
 

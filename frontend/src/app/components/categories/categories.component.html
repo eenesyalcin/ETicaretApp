@@ -2,6 +2,7 @@
  
 <!-- Oluşturduğumuz generic sayfa yapısını buraya gömdük. -->
 <app-blank title="Kategoriler" sectionTitle="Kategori Listesi">
+    <!-- Ürün ekleme ve arama kısmını tasarladık. -->
     <div class="form-group">
         <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addModal">
             <i class="fa fa-plus"></i>
@@ -13,7 +14,7 @@
 
     <!-- Oluşturduğumuz generic tablo yapısını buraya gömdük. -->
     <app-table [heads]='["#", "KATAGORİ ADI", "İŞLEMLER"]'>
-        <!-- Döngü ile yapıla katagori kaydını tabloya yazdırdık. -->
+        <!-- Döngü ile yapılan katagori kaydını tabloya yazdırdık. -->
         @for (category of categories | categoryPipe: search; track category) {
             <tr>
                 <td>{{ $index + 1 }}</td>
