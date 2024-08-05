@@ -47,3 +47,49 @@ router.post("removeById", async(req, res) => {
         res.json({message: "Ürün kaydı başarıyla silindi."});
     });
 });
+
+
+// ÜRÜN LİSTELEME ==> (Pagination yapısına uygun!)
+router.post("/", async(req, res) => {
+    response(res, async() => {
+        const {pageNumber, pageSize, search} = req.body;        // Gelen ürün bilgilerini body içerisinde aldık.
+        
+        // Arama verisine göre kaç adet ürün olduğunu tespit ediyoruz.
+        let productCounter = await Product.find({
+            $or: [
+                {
+                    // Regex, arama sonucunda içerisinde geçen benzer tüm değerleri getir anlamında kullanılır.
+                    name: {$regex: search, $options: 'i'}
+                }
+            ]
+        }).count();
+
+        // Ürün listesini elde ediyoruz.
+        let products = await Product.find({
+            $or: [
+                {
+                    // Regex, arama sonucunda içerisinde geçen benzer tüm değerleri getir anlamında kullanılır.
+                    name: {$regex: search, $options: 'i'}
+                }
+            ]
+        })
+        .sort({name: 1})                        // Ürünleri ismine göre küçükten büyüğe sıraladık.
+        .populate("catagories")                 // Mevcutta olan katagori tablosunu buna dahil ettik.
+        .skip((pageNumber - 1) * pageSize)      // Kaç tane ürün kaydını atlaması gerektiğini belirttik.
+        .limit(pageSize);                       // Kaç tane ürün kaydı alacağını bildirdik.
+
+        let totalPageCount = Math.ceil(productCount / pageSize);        // Toplam sayfa sayısını aldık.
+
+        // Dönecek olan modeli oluşturduk.
+        let model = {
+            datas: products,
+            pageNumber: pageNumber,
+            pageSize: pageSize,
+            totalPageCount: totalPageCount,
+            isFirstPage: pageNumber == 1 ? true : false,
+            isLastPage: totalPageCount == pageNumber ? true : false,
+        };
+
+        res.json(model);        // Oluşturduğumuz modeli karşı tarafa gönderdik.
+    });
+});
