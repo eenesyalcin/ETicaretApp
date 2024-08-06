@@ -1,0 +1,97 @@
+<!-- ÜRÜN EKLEME SAYFA TASARIMI -->
+
+<!-- Oluşturduğumuz generic sayfa yapısını buraya gömdük. -->
+<app-blank title="Ürün Ekleme" sectionTitle="Ürün Ekleme">
+    <div class="row center">
+        <div class="col-md-6">
+            <!-- Ürün eklemek için form oluşturduk. -->
+            <form #addForm="ngForm" (ngSubmit)="add(addForm)" autocomplete="off">
+                <div class="form-group">
+                    <label for="name">Ürün Adı</label>
+                    <input
+                        type="text"
+                        name="name"
+                        id="name"
+                        ngModel
+                        required
+                        #name
+                        minlength="3"
+                        class="form-control"
+                        [appValid]="name.validity.valid">
+                    <div class="invalid-feedback">
+                        Ürün adı en az 3 karakter olmalıdır!
+                    </div>
+                </div>
+                <div class="form-group mt-2">
+                    <label for="categoriesSelect">Kategoriler</label>
+                    <select
+                        class="form-control"
+                        name="categoriesSelect"
+                        id="categoriesSelect"
+                        ngModel
+                        multiple
+                        #categoriesSelect>
+                        @for (category of categories; track category) {
+                            <option [value]="category._id">{{ category.name }}</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group mt-2">
+                    <label for="stock">Stok Adedi</label>
+                    <input
+                        type="number"
+                        name="stock"
+                        id="stock"
+                        ngModel
+                        required
+                        #stock
+                        min="1"
+                        class="form-control"
+                        [appValid]="stock.validity.valid">
+                    <div class="invalid-feedback">
+                        En az 1 tane ürün stok adedi olmalıdır!
+                    </div>
+                </div>
+                <div class="form-group mt-2">
+                    <label for="price">Ürün Fiyatı</label>
+                    <input
+                        type="number"
+                        name="price"
+                        id="price"
+                        ngModel
+                        required
+                        #price
+                        min="1"
+                        class="form-control"
+                        [appValid]="price.validity.valid">
+                    <div class="invalid-feedback">
+                        Ürün fiyatı en az 1 olmalıdır!
+                    </div>
+                </div>
+                <div class="form-group mt-2">
+                    <label for="images">Ürün Resimleri</label>
+                    <input
+                        type="file"
+                        name="images"
+                        id="images"
+                        ngModel
+                        multiple
+                        class="form-control"
+                        (change)="getImages($event)">
+                </div>
+                <hr>
+                <div class="form-group mt-2">
+                    <p>Seçilen Resimler</p>
+                    @for (image of imageUrls; track image) {
+                        <span (click)="removeImage(image.name, image.size, $index)">
+                            <img [src]="image.imageUrl" width="100" class="mx-1">
+                        </span>
+                    }
+                </div>
+                <div class="form-group mt-2">
+                    <button class="btn btn-primary w-100">KAYDET</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</app-blank>

@@ -46,7 +46,7 @@ export class ProductService {
 
   // Ürün resmini silmek için POST API isteği yaptık.
   removeImageProductIdAndIndex(model: any, callBack: (res: ProductModel) => void){
-    this._http.post<ProductModel>("products/removeImageProductIdAndIndex", model, res => callBack(res));
+    this._http.post<ProductModel>("products/removeImageByProductIdAndIndex", model, res => callBack(res));
   }
 
 }

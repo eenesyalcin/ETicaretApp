@@ -6,11 +6,14 @@ const fs = require("fs");
 const upload = require("../services/file.service");
 const response = require("../services/response.service");
 
+
 // ÜRÜN EKLEME
 router.post("/add", upload.array("images"), async(req, res) => {
     response(res, async() => {
-        const {name, stock, price, categories} = req.body;      // Gelen ürün bilgilerini body içerisinde aldık.
-        const productId = uuidv4();                             // Verilen id değerinin unique bir değer olmasını sağlar.
+        const {name, stock, price, categories} = req.body;              // Gelen ürün bilgilerini body içerisinde aldık.
+        const productId = uuidv4();                                     // Verilen id değerinin unique bir değer olmasını sağlar.
+
+        const imageUrls = req.files.map(file => file.path);             // Gelen resimlerin URL bilgilerini elde ettik.
 
         // Ürünü hazırladık.
         let product = new Product({
@@ -20,7 +23,7 @@ router.post("/add", upload.array("images"), async(req, res) => {
             price: price,
             categories: categories,
             isActive: true,
-            imageUrls: req.file,
+            imageUrls: imageUrls,
             createdDate: new Date()
         });
 
@@ -73,10 +76,10 @@ router.post("/", async(req, res) => {
                 }
             ]
         })
-        .sort({name: 1})                        // Ürünleri alfabetik olarak sıraladık.
-        .populate("categories")                 // Mevcutta olan katagori tablosunu buna dahil ettik.
-        .skip((pageNumber - 1) * pageSize)      // Kaç tane ürün kaydını atlaması gerektiğini belirttik.
-        .limit(pageSize);                       // Kaç tane ürün kaydı alacağını bildirdik.
+        .sort({name: 1})                                                // Ürünleri alfabetik olarak sıraladık.
+        .populate("categories")                                         // Mevcutta olan katagori tablosunu buna dahil ettik.
+        .skip(Math.max(0, (pageNumber - 1) * pageSize))                 // Kaç tane ürün kaydını atlaması gerektiğini belirttik.
+        .limit(pageSize);                                               // Kaç tane ürün kaydı alacağını bildirdik.
 
         let totalPageCount = Math.ceil(productCount / pageSize);        // Toplam sayfa sayısını aldık.
 

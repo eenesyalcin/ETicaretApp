@@ -19,7 +19,7 @@ export class ProductsComponent implements OnInit{
   result: PaginationResultModel<ProductModel[]> = new PaginationResultModel<ProductModel[]>();
   request: RequestModel = new RequestModel();
   pageNumbers: number[] = [];
-  product: ProductModel = new ProductModel();
+  products: ProductModel[] = [];
 
   constructor(
     private _product: ProductService,
@@ -32,7 +32,7 @@ export class ProductsComponent implements OnInit{
     this.getAll();
   }
 
-  // Üürnleri getiren metodu yazdık.
+  // Ürünleri getiren metodu yazdık.
   getAll(pageNumber = 1){
     this.request.pageNumber = pageNumber;
     this._product.getAll(this.request, res => {

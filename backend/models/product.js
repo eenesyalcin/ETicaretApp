@@ -7,7 +7,7 @@ const productSchema = new mongoose.Schema({
     imageUrls: Array,
     stock: Number,
     price: Number,
-    createDate: Date,
+    createdDate: Date,
     isActive: Boolean,
     categories: [{type: String, ref: "Category"}]
 });
